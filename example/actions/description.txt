@@ -1,0 +1,4 @@
+この example は Interactive Bash Script Framework の使用例を示す
+簡単なデモです。
+
+想定している使用例を一通り網羅しています。

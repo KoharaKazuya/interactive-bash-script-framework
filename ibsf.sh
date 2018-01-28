@@ -37,6 +37,17 @@ ibsf_message() {
   read
 }
 
+# Show message (from file) and confirmation
+#
+# @param $1 message file path
+ibsf_message_file() {
+  print_separator
+  cat "$1" | sed -E 's/^/  /'
+  printf '\n'
+  print_ask '(Enter で次へ) '
+  read
+}
+
 # Confirm execution of external script
 #
 # Show content of external script, and confirm before execution.
