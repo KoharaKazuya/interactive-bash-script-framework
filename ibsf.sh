@@ -112,7 +112,7 @@ _ibsf_deco_white="$(     tput setaf 7  2>/dev/null || : )"
 # Show line sparator
 print_separator() {
   printf '%s%s%s' "$_ibsf_deco_reset" "$_ibsf_deco_underline" "$_ibsf_deco_weak"
-  printf "%$( tput cols 2>/dev/null || : )s"
+  printf "%$( tput cols || : )s"
   printf '%s\n\n' "$_ibsf_deco_reset"
 }
 # Show message with indent
