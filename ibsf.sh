@@ -88,10 +88,14 @@ ibsf_exec_action() {
           ;;
     'y' ) print_info "$action_name を実行します。"
           printf '\n\n'
-          if ! "$action_file"; then
+          local exit_code=0
+          "$action_file" || exit_code="$?"
+          if [ "$exit_code" != 0 ]; then
             printf '\n'
             print_fail "$action_name の実行中にエラーが発生しました。"
-            printf '\n\n'
+            printf '\n\n%s' "$_ibsf_deco_weak"
+            printf '  Exit Code: %d\n' "$exit_code"
+            printf '%s\n' "$_ibsf_deco_reset"
             return 1
           fi
           printf '\n'
