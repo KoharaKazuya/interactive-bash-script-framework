@@ -77,7 +77,7 @@ ibsf_exec_action() {
     return 1
   fi
 
-  print_ask "$action_name を実行します。よろしいですか？ (y/n/q/?) "
+  print_ask "$action_name を実行します。よろしいですか？ (y/n/s/q/?) "
   read answer
   printf '\n'
 
@@ -103,8 +103,17 @@ ibsf_exec_action() {
           printf '\n\n'
           return 0
           ;;
+    's' ) print_info "$action_name のファイル内容を表示します。"
+          printf '\n\n'
+          if file --mime "$action_file" | grep 'charset=binary' >/dev/null 2>&1; then
+            cat "$action_file" | xxd | "${PAGER:-less}" || :
+          else
+            cat "$action_file" | "${PAGER:-less}" || :
+          fi
+          ;;
     '?' ) printf '  y: 実行する\n'
           printf '  n: スキップする\n'
+          printf '  s: ファイル内容を表示する\n'
           printf '  q: 中断する\n'
           printf '\n'
           ;;
