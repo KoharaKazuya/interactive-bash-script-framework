@@ -66,10 +66,16 @@ ibsf_exec_action() {
 
   print_separator
 
-  print_info "$action_name を実行しようとしています。内容を出力します。"
-  printf '\n\n%s' "$_ibsf_deco_weak"
-  cat "$action_file" | sed -E 's/^/  /'
-  printf '%s\n' "$_ibsf_deco_reset"
+  if ! [ -f "$action_file" ]; then
+    print_fail "$action_file が見つかりません。"
+    printf '\n\n'
+    return 1
+  fi
+  if ! [ -x "$action_file" ]; then
+    print_fail "$action_file は実行ファイルではありません。"
+    printf '\n\n'
+    return 1
+  fi
 
   print_ask "$action_name を実行します。よろしいですか？ (y/n/q/?) "
   read answer
