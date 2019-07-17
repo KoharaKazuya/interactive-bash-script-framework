@@ -13,6 +13,8 @@ ibsf_begin_trap() {
 }
 # @private
 ibsf_onerror() {
+  trap ERR # トラップを解除する
+  printf '\n\n'
   print_fail '処理に失敗したため、スクリプトの実行を中断します。'
   printf '\n\n%s' "$_ibsf_deco_weak"
   printf '  File: %s\n' "${BASH_SOURCE[1]}"
@@ -21,7 +23,8 @@ ibsf_onerror() {
 }
 # @private
 ibsf_oninterapt() {
-  trap INT
+  trap INT # トラップを解除する
+  printf '\n\n'
   print_info '中断が要求されました。'
   printf '\n\n'
 }
@@ -82,7 +85,7 @@ ibsf_exec_action() {
   printf '\n'
 
   case "$answer" in
-    'q' ) print_fail '中断が要求されたため、スクリプトの実行を中断します。'
+    'q' ) print_info '中断が要求されました。'
           printf '\n\n'
           return 1
           ;;
